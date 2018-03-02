@@ -1,0 +1,4 @@
+#!/bin/bash
+
+image=$1
+docker run --rm -v `pwd`:/ws -v /data/maven:/root/.m2 --workdir /ws ${image} bash -l -c './cmd'

@@ -1,0 +1,7 @@
+Package: [[artifactId]]
+Version: [[project.release.version]]
+Section: [[deb.section]]
+Priority: [[deb.priority]]
+Architecture: [[deb.architecture]]
+Description: [[description]]
+Maintainer: [[deb.publisher]]

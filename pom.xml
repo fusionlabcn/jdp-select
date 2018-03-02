@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project>
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>com.jikelab</groupId>
+  <artifactId>jdp-select</artifactId>
+  <version>1.0.0.0-512</version>
+  <packaging>pom</packaging>
+  <name>JikeLab Enterprise JDP</name>
+  <description>JikeLab Enterprise JDP -${project.version} </description>
+
+  <organization>
+    <name>JikeLab</name>
+    <url>http://www.jikelab.com/</url>
+  </organization>
+
+ <properties>
+  <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+  <project.release.version>${project.version}</project.release.version>
+  <deb.architecture>all</deb.architecture>
+ </properties>
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>build-helper-maven-plugin</artifactId>
+        <version>1.8</version>
+        <executions>
+          <execution>
+            <id>parse-package-version</id>
+            <goals>
+              <goal>regex-property</goal>
+            </goals>
+            <configuration>
+              <name>package-version</name>
+              <value>${project.version}</value>
+              <regex>^([0-9]+)\.([0-9]+)\.([0-9]+)\.([0-9]+)((\.|-).*)?</regex>
+              <replacement>$1.$2.$3.$4</replacement>              
+              <failIfNoMatch>true</failIfNoMatch>
+            </configuration>
+          </execution>
+          <execution>
+            <id>parse-package-release</id>
+            <goals>
+              <goal>regex-property</goal>
+            </goals>
+            <configuration>
+              <name>package-release</name>
+              <value>${project.version}</value>
+              <regex>^([0-9]+)\.([0-9]+)\.([0-9]+)\.([0-9]+)((\.|-)(([0-9]+)|(RDF)|(SNAPSHOT)|(techwin)).*)?</regex>
+              <replacement>$7</replacement>
+              <failIfNoMatch>true</failIfNoMatch>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>rpm-maven-plugin</artifactId>
+        <version>2.1.4</version>
+        <executions>
+          <execution>
+            <!-- unbinds rpm creation from maven lifecycle -->
+            <phase>none</phase>
+            <goals>
+              <goal>rpm</goal>
+            </goals>
+          </execution>
+        </executions>
+        <configuration>
+          <license>Apache</license>
+          <copyright>2012, Apache Software Foundation , JikeLab</copyright>
+          <distribution>JikeLab Enterprise </distribution>
+          <group>Ambari</group>
+          <needarch>noarch</needarch>
+          <version>${package-version}</version>
+          <release>${package-release}</release>
+          <mappings>
+             <mapping>
+              <directory>/usr/bin</directory>
+              <username>root</username>
+              <groupname>root</groupname>
+              <directoryIncluded>false</directoryIncluded> <!-- avoid managing /usr/bin -->
+              <sources>
+                <source>
+                  <location>src/usr/bin</location>
+                </source>
+              </sources>
+            </mapping>
+          </mappings>
+
+          <postinstallScriptlet>
+            <scriptFile>src/rpm/scripts/postinstall.sh</scriptFile>
+            <fileEncoding>utf-8</fileEncoding>
+          </postinstallScriptlet>
+
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.vafer</groupId>
+        <artifactId>jdeb</artifactId>
+        <version>1.4</version>
+        <executions>
+          <execution>
+            <phase>none</phase>
+            <goals>
+              <goal>jdeb</goal>
+            </goals>
+          </execution>
+        </executions>
+        <configuration>
+          <controlDir>${basedir}/src/deb/control</controlDir>
+          <deb>${basedir}/target/${project.artifactId}_${package-version}-${package-release}.deb</deb>
+          <skip>false</skip>
+          <skipPOMs>false</skipPOMs>
+          <dataSet>
+            <data>
+              <src>src/usr/bin</src>
+              <type>directory</type>
+              <mapper>
+                <prefix>/usr/bin</prefix>
+                <type>perm</type>
+                <user>root</user>
+                <group>root</group>
+                <filemode>755</filemode>
+              </mapper>
+            </data>
+          </dataSet>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+</project>
+
