@@ -35,7 +35,7 @@ packages = ( "accumulo", "atlas", "flume", "falcon", "hadoop",
              "slider", "spark", "spark2", "sqoop", "storm",
              "storm-slider-client",
              "tez", "livy", "zookeeper", "zeppelin",
-             "hive2", "tez_hive2", "superset")
+             "hive2", "tez_hive2", "superset", "clickhouse")
 
 def printHelp():
     print """

@@ -90,7 +90,9 @@ leaves = {
            "spark2-thriftserver" : "spark2",
            "spark2-historyserver" : "spark2",
            "streamline": "streamline",
-           "superset" : "superset"
+           "superset" : "superset",
+           "clickhouse-server" : "clickhouse",
+           "clickhouse-client" : "clickhouse"
 }
 
 # Define the aliases and the list of leaves they correspond to
@@ -199,6 +201,10 @@ command_symlinks = {
   "spark-sql" : "spark-client/bin/spark-sql",
   "spark-submit" : "spark-client/bin/spark-submit",
   "pyspark" : "spark-client/bin/pyspark", 
+  "clickhouse-client" : "clickhouse-client/bin/clickhouse", 
+  "clickhouse-server" : "clickhouse-client/bin/clickhouse", 
+  "clickhouse-compressor" : "clickhouse-client/bin/clickhouse-compressor", 
+  "clickhouse" : "clickhouse-server/bin/clickhouse", 
 }
 
 bin_directory = "/usr/bin"
