@@ -3,7 +3,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.jikelab</groupId>
   <artifactId>jdp-select</artifactId>
-  <version>3.0.0.0-108</version>
+  <version>3.1.0.0-108</version>
   <packaging>pom</packaging>
   <name>JikeLab Enterprise JDP</name>
   <description>JikeLab Enterprise JDP -${project.version} </description>
