@@ -1,2 +1,2 @@
 # jdp-select
-JDP Data Platform
+JDP distro select

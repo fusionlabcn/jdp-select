@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project>
   <modelVersion>4.0.0</modelVersion>
-  <groupId>com.jikelab</groupId>
+  <groupId>cn.fusionlab</groupId>
   <artifactId>jdp-select</artifactId>
   <version>3.1.0.0-108</version>
   <packaging>pom</packaging>
-  <name>JikeLab Enterprise JDP</name>
-  <description>JikeLab Enterprise JDP -${project.version} </description>
+  <name>Enterprise Fusionlab</name>
+  <description>Enterprise Fusionlab -${project.version} </description>
 
   <organization>
-    <name>JikeLab</name>
-    <url>http://www.jikelab.com/</url>
+    <name>Enterprise Fusionlab</name>
+    <url>http://www.fusionlab.cn/</url>
   </organization>
 
  <properties>
@@ -69,8 +69,8 @@
         </executions>
         <configuration>
           <license>Apache</license>
-          <copyright>2012, Apache Software Foundation , JikeLab</copyright>
-          <distribution>JikeLab Enterprise </distribution>
+          <copyright>2012, Apache Software Foundation , Fusionlab</copyright>
+          <distribution>Fusionlab Enterprise </distribution>
           <group>Ambari</group>
           <needarch>noarch</needarch>
           <version>${package-version}</version>

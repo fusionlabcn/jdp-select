@@ -24,8 +24,11 @@ import sys
 
 # The global prefix and current directory
 root = "/usr/jdp"
+jdpVersion = "3.1.0.0-108"
 current = root + "/current"
 versionRegex = re.compile('[-.]')
+
+spark_wrapper_scripts = ["run-example", "pyspark", "spark-class", "sparkR", "spark-shell", "spark-sql", "spark-submit"]
 
 # The packages and where in the release they should point to
 leaves = {
@@ -37,37 +40,51 @@ leaves = {
            "accumulo-tracer": "accumulo",
            "atlas-server": "atlas",
            "atlas-client": "atlas",
+           "beacon-server": "beacon",
+           "beacon-client": "beacon",
            "falcon-client": "falcon",
            "falcon-server": "falcon",
            "flume-server": "flume",
            "hadoop-client": "hadoop",
+           "hadoop-hdfs-client": "hadoop-hdfs",
+           "hadoop-mapreduce-client": "hadoop-mapreduce",
+           "hadoop-yarn-client": "hadoop-yarn",
            "hadoop-hdfs-datanode": "hadoop-hdfs",
            "hadoop-hdfs-journalnode": "hadoop-hdfs",
            "hadoop-hdfs-nfs3": "hadoop-hdfs",
            "hadoop-hdfs-namenode": "hadoop-hdfs",
            "hadoop-hdfs-portmap": "hadoop-hdfs",
            "hadoop-hdfs-secondarynamenode": "hadoop-hdfs",
+           "hadoop-hdfs-zkfc": "hadoop-hdfs",
            "hadoop-httpfs": "hadoop-httpfs",
            "hadoop-mapreduce-historyserver": "hadoop-mapreduce",
            "hadoop-yarn-resourcemanager": "hadoop-yarn",
            "hadoop-yarn-nodemanager": "hadoop-yarn",
            "hadoop-yarn-timelineserver": "hadoop-yarn",
+           "hadoop-yarn-timelinereader": "hadoop-yarn",
+           "hadoop-yarn-registrydns": "hadoop-yarn",
            "hbase-client": "hbase",
            "hbase-master": "hbase",
            "hbase-regionserver": "hbase",
+           "hive-client": "hive",
            "hive-metastore": "hive",
            "hive-server2": "hive",
            "hive-webhcat": "hive-hcatalog",
+           "hive-server2-hive": "hive",
            "hive-server2-hive2": "hive2",
            "kafka-broker": "kafka",
+           "hive_warehouse_connector": "hive_warehouse_connector",
            "knox-server": "knox",
+           "livy-client": "livy",
            "livy-server": "livy",
+           "livy2-client": "livy2",
+           "livy2-server": "livy2",
            "mahout-client": "mahout",
-           "nifi": "nifi",
            "oozie-client": "oozie",
            "oozie-server": "oozie",
            "phoenix-client": "phoenix",
            "phoenix-server": "phoenix",
+           "pig-client": "pig",
            "slider-client": "slider",
            "sqoop-client": "sqoop",
            "sqoop-server": "sqoop",
@@ -75,6 +92,7 @@ leaves = {
            "storm-nimbus": "storm",
            "storm-supervisor": "storm",
            "storm-slider-client": "storm-slider-client",
+           "tez-client": "tez",
            "zeppelin-server": "zeppelin",
            "zookeeper-client": "zookeeper",
            "zookeeper-server": "zookeeper",
@@ -82,18 +100,28 @@ leaves = {
            "ranger-kms" : "ranger-kms",
            "ranger-usersync" : "ranger-usersync",
            "ranger-tagsync" : "ranger-tagsync",
-           "registry": "registry",
+           "shc" : "shc",
+           "spark_llap" : "spark_llap",
            "spark-client" : "spark",
            "spark-thriftserver" : "spark",
            "spark-historyserver" : "spark",
            "spark2-client" : "spark2",
+           "spark2-client" : "spark2",
            "spark2-thriftserver" : "spark2",
            "spark2-historyserver" : "spark2",
-           "streamline": "streamline",
+           "druid-overlord" : "druid",
+           "druid-middlemanager" : "druid",
+           "druid-coordinator" : "druid",
+           "druid-broker" : "druid",
+           "druid-historical" : "druid",
+           "druid-router" : "druid",
+           "druid-superset" : "superset",
            "superset" : "superset",
+           "spark-atlas-connector":"spark-atlas-connector",
+           "spark-schema-registry":"spark-schema-registry",
+           "beacon" : "beacon"
            "clickhouse-server" : "clickhouse",
            "clickhouse-client" : "clickhouse"
-}
 
 # Define the aliases and the list of leaves they correspond to
 aliases = {
@@ -105,6 +133,7 @@ aliases = {
   "all": leaves.keys(),
   "client" : ["accumulo-client",
               "atlas-client",
+              "beacon-client",
               "falcon-client",
               "hadoop-client",
               "hbase-client",
@@ -116,7 +145,10 @@ aliases = {
               "storm-client",
               "zookeeper-client",
               "spark2-client",
-              "spark-client"],
+              "spark-client",
+              "shc",
+              "spark-schema-registry",
+              "spark_llap"],
   "hadoop-hdfs-server": ["hadoop-hdfs-datanode",
                          "hadoop-hdfs-journalnode",
                          "hadoop-hdfs-nfs3",
@@ -125,7 +157,9 @@ aliases = {
   "hadoop-mapreduce-server": ["hadoop-mapreduce-historyserver"],
   "hadoop-yarn-server": ["hadoop-yarn-resourcemanager",
                          "hadoop-yarn-nodemanager",
-                         "hadoop-yarn-timelineserver"],
+                         "hadoop-yarn-timelineserver",
+                         "hadoop-yarn-timelinereader",
+                         "hadoop-yarn-registrydns"],
   "hive-server": ["hive-metastore",
                   "hive-server2",
                   "hive-webhcat"],
@@ -140,6 +174,10 @@ locked_contexts = {
                     ("pig-client", "pig"),
                     ("tez-client", "tez"),
                     ("livy-client", "livy"),
+                    ("livy2-client", "livy2"),
+                    ("shc", "shc"),
+                    ("spark-schema-registry", "spark-schema-registry"),
+                    ("spark_llap", "spark_llap"),
                     ("spark2-client", "spark2"),
                     ("spark-client", "spark")]
 }
@@ -148,6 +186,7 @@ command_symlinks = {
   "accumulo" : "accumulo-client/bin/accumulo",
   "atlas-start" : "atlas-server/bin/metadata-start.sh",
   "atlas-stop" : "atlas-server/bin/metadata-stop.sh",
+  "beacon" : "beacon-client/bin/beacon.py",
   "beeline" : "hive-client/bin/beeline",
   "falcon" : "falcon-client/bin/falcon",
   "flume-ng"  : "flume-server/bin/flume-ng",
@@ -200,7 +239,7 @@ command_symlinks = {
   "spark-shell" : "spark-client/bin/spark-shell",
   "spark-sql" : "spark-client/bin/spark-sql",
   "spark-submit" : "spark-client/bin/spark-submit",
-  "pyspark" : "spark-client/bin/pyspark", 
+  "pyspark" : "spark-client/bin/pyspark",
   "clickhouse-client" : "clickhouse-client/bin/clickhouse", 
   "clickhouse-server" : "clickhouse-client/bin/clickhouse", 
   "clickhouse-compressor" : "clickhouse-client/bin/clickhouse-compressor", 
@@ -249,6 +288,15 @@ def printPackages():
   print "Aliases:"
   for pkg in groups:
     print " ", pkg
+
+#Print whether given package is supported or not
+def isSupportedPacakge(package):
+    packages = leaves.keys()
+    if package in packages:
+      print "%s" % package
+    else:
+      print None
+      sys.exit(1)
 
 # Print the installed packages
 def printVersions():
@@ -328,10 +376,11 @@ def createCommandSymlinks(packages, rpm_mode):
           os.remove(filename)
           os.symlink(target, filename)
       else:
-        print "ERROR:", filename, "is a regular file instead of symlink."
-        print
-        print "Please ensure that the HDP 2.1 (and earlier) packages are"
-        print "removed."
+        if os.path.basename(filename) not in spark_wrapper_scripts:
+          print "ERROR:", filename, "is a regular file instead of symlink."
+          print
+          print "Please ensure that the JDP 2.1 (and earlier) packages are"
+          print "removed."
 
 # Do a sanity check on the tables
 def sanityCheckTables():
@@ -353,14 +402,14 @@ def sanityCheckTables():
 
 def printHelp():
   print """
-usage: distro-select [-h] [<command>] [<package>] [<version>]
+usage: jdp-select [-h] [<command>] [<package>] [<version>]
 
-Set the selected version of HDP.
+Set the selected version of JDP.
 
 positional arguments:
   <command>   One of set, status, versions, or packages
   <package>   the package name to set
-  <version>   the HDP version to set
+  <version>   the JDP version to set
 
 optional arguments:
   -h, --help  show this help message and exit
@@ -371,6 +420,7 @@ Commands:
   status   : show the version of the package
   versions : show the currently installed versions
   packages : show the individual package names
+  supports : Check jdp-select supports a specific package
 """
 
 def checkCommandParameters(cmd, realLen, rightLen):
@@ -389,12 +439,16 @@ sanityCheckTables()
 parser = optparse.OptionParser(add_help_option=False)
 parser.add_option("-h", "--help", action="store_true", dest="help",
                   help="print help")
+parser.add_option("-v", "--version", action="store_true", dest="version",
+                  help="print jdp version")
 parser.add_option("-r", "--rpm-mode", action="store_true", dest="rpm_mode", default=False,
                   help="if true checks if there is symlink exists and creates the symlink if it doesn't")
 (options, args) = parser.parse_args()
 
 if options.help:
   printHelp()
+elif options.version:
+  print jdpVersion
 else:
   if len(args) == 0 or args[0] == 'status':
     if len(args) > 1:
@@ -412,6 +466,9 @@ else:
   elif args[0] == "packages":
     checkCommandParameters('packages', len(args), 1)
     printPackages()
+  elif args[0] == "supports":
+    checkCommandParameters('support', len(args), 2)
+    isSupportedPacakge(args[1])
   else:
     print "ERROR: Unknown command -", args[0]
     printHelp()

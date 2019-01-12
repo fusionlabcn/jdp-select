@@ -29,17 +29,19 @@ current = root + "/current"
 vconfroot='/etc'
 packages = ( "accumulo", "atlas", "flume", "falcon", "hadoop",
              "hbase", "hive", "hive-hcatalog",
-             "kafka", "knox", "mahout", "nifi", "oozie",
+             "kafka", "knox", "mahout", "oozie",
              "pig", "ranger-admin",
              "ranger-kms", "ranger-usersync", "ranger-tagsync",
              "slider", "spark", "spark2", "sqoop", "storm",
              "storm-slider-client",
-             "tez", "livy", "zookeeper", "zeppelin",
-             "hive2", "tez_hive2", "superset", "clickhouse")
+             "tez", "livy2", "zookeeper", "zeppelin",
+             "hive2", "tez_hive2", "druid", "superset",
+             "hive_warehouse_connector", "spark_schema_registry",
+	     "clickhouse")
 
 def printHelp():
     print """
-usage: hdfconf-select [-h] [<command>] package --stack-version --conf-version
+usage: conf-select [-h] [<command>] package --stack-version --conf-version
 arguments:
   <command>          One of create-conf-dir, set-conf-dir
   <--package>        package name to set

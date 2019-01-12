@@ -23,11 +23,11 @@ function find_script() {
   SCRIPT=
 
   if [ -z "${SPARK_MAJOR_VERSION}" ]; then
-    spark_versions="$(ls -1 "/usr/hdp/current" | grep "^spark.*-client$")"
+    spark_versions="$(ls -1 "/usr/jdp/current" | grep "^spark.*-client$")"
 
     num_spark=0
     for i in $spark_versions; do
-      tmp="/usr/hdp/current/${i}/bin/${FILE}"
+      tmp="/usr/jdp/current/${i}/bin/${FILE}"
       if [ -f "${tmp}" ]; then
         num_spark=$(( $num_spark + 1 ))
         SCRIPT="${tmp}"
@@ -37,16 +37,16 @@ function find_script() {
     if [ "${num_spark}" -gt "1" ]; then
       echo "Multiple versions of Spark are installed but SPARK_MAJOR_VERSION is not set" 1>&2
       echo "Spark1 will be picked by default" 1>&2
-      SCRIPT="/usr/hdp/current/spark-client/bin/${FILE}"
+      SCRIPT="/usr/jdp/current/spark-client/bin/${FILE}"
     fi
 
   elif [ "${SPARK_MAJOR_VERSION}" -eq "1" ]; then
     echo -e "SPARK_MAJOR_VERSION is set to 1, using Spark" 1>&2
-    SCRIPT="/usr/hdp/current/spark-client/bin/${FILE}"
+    SCRIPT="/usr/jdp/current/spark-client/bin/${FILE}"
 
   else
     echo -e "SPARK_MAJOR_VERSION is set to ${SPARK_MAJOR_VERSION}, using Spark${SPARK_MAJOR_VERSION}" 1>&2
-    SCRIPT="/usr/hdp/current/spark${SPARK_MAJOR_VERSION}-client/bin/${FILE}"
+    SCRIPT="/usr/jdp/current/spark${SPARK_MAJOR_VERSION}-client/bin/${FILE}"
   fi
 
   if [ ! -f "${SCRIPT}" ]; then
