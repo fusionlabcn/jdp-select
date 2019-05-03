@@ -36,7 +36,7 @@ packages = ( "accumulo", "atlas", "flume", "falcon", "hadoop",
              "storm-slider-client",
              "tez", "livy2", "zookeeper", "zeppelin",
              "hive2", "tez_hive2", "druid", "superset",
-             "hive_warehouse_connector", "spark_schema_registry", "clickhouse", "flink")
+             "hive_warehouse_connector", "spark_schema_registry", "clickhouse", "flink", "fusiondb")
 
 def printHelp():
     print """

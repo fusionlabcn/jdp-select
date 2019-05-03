@@ -122,7 +122,8 @@ leaves = {
            "beacon" : "beacon",
            "clickhouse-server" : "clickhouse",
            "clickhouse-client" : "clickhouse",
-	         "flink" : "flink"
+	         "flink" : "flink",
+           "fusiondb" : "fusiondb"
         }
 
 # Define the aliases and the list of leaves they correspond to
