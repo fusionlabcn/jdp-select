@@ -24,7 +24,7 @@ import sys
 
 # The global prefix and current directory
 root = "/usr/jdp"
-jdpVersion = "3.2.0.0-108"
+jdpVersion = "3.1.0.0-108"
 current = root + "/current"
 versionRegex = re.compile('[-.]')
 
@@ -121,7 +121,11 @@ leaves = {
            "spark-schema-registry":"spark-schema-registry",
            "beacon" : "beacon",
            "clickhouse-server" : "clickhouse",
-           "clickhouse-client" : "clickhouse"
+           "clickhouse-client" : "clickhouse",
+	         "flink" : "flink",
+           "fusiondb" : "fusiondb",
+           "cai" : "cai"
+        }
 
 # Define the aliases and the list of leaves they correspond to
 aliases = {
@@ -243,7 +247,8 @@ command_symlinks = {
   "clickhouse-client" : "clickhouse-client/bin/clickhouse", 
   "clickhouse-server" : "clickhouse-client/bin/clickhouse", 
   "clickhouse-compressor" : "clickhouse-client/bin/clickhouse-compressor", 
-  "clickhouse" : "clickhouse-server/bin/clickhouse", 
+  "clickhouse" : "clickhouse-server/bin/clickhouse",
+  "flink" : "flink/bin/flink"
 }
 
 bin_directory = "/usr/bin"
