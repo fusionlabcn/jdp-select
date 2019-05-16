@@ -24,7 +24,7 @@ import sys
 
 # The global prefix and current directory
 root = "/usr/jdp"
-jdpVersion = "3.1.0.0-108"
+jdpVersion = "3.2.0.0-108"
 current = root + "/current"
 versionRegex = re.compile('[-.]')
 
