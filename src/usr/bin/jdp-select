@@ -120,6 +120,7 @@ leaves = {
            "spark-atlas-connector":"spark-atlas-connector",
            "spark-schema-registry":"spark-schema-registry",
            "beacon" : "beacon",
+           "clickhouse" : "clickhouse",
            "clickhouse-server" : "clickhouse",
            "clickhouse-client" : "clickhouse",
 	         "flink" : "flink",
