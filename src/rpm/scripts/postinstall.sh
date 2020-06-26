@@ -1,1 +1,1 @@
-ln -s /usr/bin/jdpconf-select /usr/bin/conf-select
+ln -s /usr/bin/anyscaleconf-select /usr/bin/conf-select

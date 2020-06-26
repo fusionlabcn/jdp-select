@@ -23,8 +23,8 @@ import re
 import sys
 
 # The global prefix and current directory
-root = "/usr/jdp"
-jdpVersion = "3.2.0.0-108"
+root = "/opt/anyscale"
+anyscaleVersion = "1.1.0.0-108"
 current = root + "/current"
 versionRegex = re.compile('[-.]')
 
@@ -385,7 +385,7 @@ def createCommandSymlinks(packages, rpm_mode):
         if os.path.basename(filename) not in spark_wrapper_scripts:
           print "ERROR:", filename, "is a regular file instead of symlink."
           print
-          print "Please ensure that the JDP 2.1 (and earlier) packages are"
+          print "Please ensure that the ANYSCALE 2.1 (and earlier) packages are"
           print "removed."
 
 # Do a sanity check on the tables
@@ -408,14 +408,14 @@ def sanityCheckTables():
 
 def printHelp():
   print """
-usage: jdp-select [-h] [<command>] [<package>] [<version>]
+usage: anyscale-select [-h] [<command>] [<package>] [<version>]
 
-Set the selected version of JDP.
+Set the selected version of ANYSCALE.
 
 positional arguments:
   <command>   One of set, status, versions, or packages
   <package>   the package name to set
-  <version>   the JDP version to set
+  <version>   the ANYSCALE version to set
 
 optional arguments:
   -h, --help  show this help message and exit
@@ -426,7 +426,7 @@ Commands:
   status   : show the version of the package
   versions : show the currently installed versions
   packages : show the individual package names
-  supports : Check jdp-select supports a specific package
+  supports : Check anyscale-select supports a specific package
 """
 
 def checkCommandParameters(cmd, realLen, rightLen):
@@ -446,7 +446,7 @@ parser = optparse.OptionParser(add_help_option=False)
 parser.add_option("-h", "--help", action="store_true", dest="help",
                   help="print help")
 parser.add_option("-v", "--version", action="store_true", dest="version",
-                  help="print jdp version")
+                  help="print anyscale version")
 parser.add_option("-r", "--rpm-mode", action="store_true", dest="rpm_mode", default=False,
                   help="if true checks if there is symlink exists and creates the symlink if it doesn't")
 (options, args) = parser.parse_args()
@@ -454,7 +454,7 @@ parser.add_option("-r", "--rpm-mode", action="store_true", dest="rpm_mode", defa
 if options.help:
   printHelp()
 elif options.version:
-  print jdpVersion
+  print anyscaleVersion
 else:
   if len(args) == 0 or args[0] == 'status':
     if len(args) > 1:

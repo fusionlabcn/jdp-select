@@ -24,7 +24,7 @@ import sys
 import errno
 
 # The global prefix and current directory
-root = "/usr/jdp"
+root = "/opt/anyscale"
 current = root + "/current"
 vconfroot='/etc'
 packages = ( "accumulo", "atlas", "flume", "falcon", "hadoop",
