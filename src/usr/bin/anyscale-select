@@ -24,7 +24,7 @@ import sys
 
 # The global prefix and current directory
 root = "/opt/anyscale"
-anyscaleVersion = "1.1.0.0-108"
+anyscaleVersion = "1.0.0.0-108"
 current = root + "/current"
 versionRegex = re.compile('[-.]')
 
